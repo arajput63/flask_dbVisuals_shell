@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="topnav">
+    <a href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="test"><i class="fas fa-chart-line"></i> TEST</a>
+  </div>
+    {% block body %}{% endblock %}
+</body>
+</html>
