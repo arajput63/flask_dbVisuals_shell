@@ -5,8 +5,10 @@ import pandas as pd
 # need xlrd to read old style .xls excel files [pip install xlrd]
 # need odfpy to read .ods files [pip install odfpy]
 
-DATABASE = os.path.abspath(os.path.dirname(__file__)) + "/"
+DATABASE = os.path.abspath(os.path.dirname(__file__)) + "/test_db.db"
 RAW_DATA_TABLE = 'test_data_table'
+
+# In the following code, deliberately keep each section seperate for demonstration purposes.
 
 # delete the table if it already exists, we will create it again from the origin csv data files
 with sql.connect(DATABASE) as connection:
@@ -31,3 +33,13 @@ with sql.connect(DATABASE) as connection:
         connection.rollback()
         print("error creating database/table...")
         print("Exception: " + str(e))
+
+
+with sql.connect(DATABASE) as con:
+    try:
+        cur = con.cursor()
+        cur.execute("INSERT INTO {} (test_string, test_int) VALUES (?,?)".format(RAW_DATA_TABLE),("test", 1))
+        print("Populated table: '{}' in database: '{}' with some test data".format(RAW_DATA_TABLE, DATABASE))
+    except Exception as e:
+        con.rollback()
+        print("Error writing to database. Exception: " + str(e))
